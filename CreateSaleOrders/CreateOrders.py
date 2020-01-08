@@ -1,4 +1,6 @@
 # coding=utf-8
+from xmlrpc.client import Fault
+
 from CreateSaleOrders import GetDataFromConfig
 
 data = GetDataFromConfig
@@ -31,8 +33,8 @@ def create_orders():
             try:
                 data.sock.execute(data.db, data.uid, data.password, 'sale.order', 'action_confirm', order_id)
                 print("Potwierdzono zamowienie o id: " + str(order_id))
-            except:
-                print("Błąd podczas potwierdzania zamowienia " + str(order_id))
+            except Fault as f:
+                print("Błąd podczas potwierdzania zamowienia o id " + str(order_id) + " " + f.faultString)
 
 
 create_orders()
