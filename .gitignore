@@ -1,2 +1,6 @@
 .idea/
 venv
+CreateSaleOrders/__pycache__/
+*.pyc
+
+

@@ -1,5 +1,5 @@
 # coding=utf-8
-import GetDataFromConfig
+from CreateSaleOrders import GetDataFromConfig
 
 data = GetDataFromConfig
 
@@ -26,6 +26,13 @@ def create_orders():
         data.sock.execute_kw(data.db, data.uid, data.password, 'sale.order', 'write', [[order_id], {'order_line': order_lines}])
 
         print("Stworzono zamowienie " + str(order) + "/" + str(data.get_orders_qty()) + " o id: " + str(order_id))
+
+        if data.get_confirm_flag():
+            try:
+                data.sock.execute(data.db, data.uid, data.password, 'sale.order', 'action_confirm', order_id)
+                print("Potwierdzono zamowienie o id: " + str(order_id))
+            except:
+                print("Błąd podczas potwierdzania zamowienia " + str(order_id))
 
 
 create_orders()

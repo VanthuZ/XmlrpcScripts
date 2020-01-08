@@ -1,12 +1,12 @@
 # coding=utf-8
-import ConfigParser
-import xmlrpclib
+import configparser
+from xmlrpc import client
 import random
 import sys
 import os
 
 os.chdir(os.path.dirname(sys.argv[0]))
-config = ConfigParser.ConfigParser()
+config = configparser.ConfigParser()
 config.read("config.ini")
 
 db = config.get('SYSTEM', 'db')
@@ -14,9 +14,9 @@ login = config.get('SYSTEM', 'login')
 password = config.get('SYSTEM', 'password')
 url = config.get('SYSTEM', 'url')
 
-sock_common = xmlrpclib.ServerProxy(url + '/xmlrpc/common')
+sock_common = client.ServerProxy(url + '/xmlrpc/common')
 uid = sock_common.login(db, login, password)
-sock = xmlrpclib.ServerProxy(url + '/xmlrpc/object')
+sock = client.ServerProxy('{}/xmlrpc/object'.format(url), allow_none=True)
 
 
 def get_orders_qty():
@@ -127,3 +127,12 @@ def get_delivery_carrier_id(delivery_type):
             delivery_carriers_ids.append(delivery['id'])
 
     return random.choice(delivery_carriers_ids)
+
+
+def get_confirm_flag():
+
+    if config.get('SALE_ORDER', 'confirm') == 'True':
+        return True
+    else:
+        return False
+
