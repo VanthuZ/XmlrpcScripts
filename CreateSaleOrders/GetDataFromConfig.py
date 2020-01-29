@@ -34,7 +34,7 @@ def get_product_uom_qty():
 def get_client_id():
 
     if config.get('SALE_ORDER_OTHER', 'clients_ids'):
-        clients_ids = map(int, (config.get('SALE_ORDER_OTHER', 'clients_ids')).split(","))
+        clients_ids = list(map(int, (config.get('SALE_ORDER_OTHER', 'clients_ids')).split(",")))
     else:
         clients_ids = sock.execute_kw(db, uid, password, 'res.partner', 'search',
                                       [[['customer', '=', True], ['type', '=', 'contact']]])
@@ -45,7 +45,7 @@ def get_client_id():
 def get_prieclist_id():
 
     if config.get('SALE_ORDER_OTHER', 'pricelists_ids'):
-        pricelists_ids = map(int, (config.get('SALE_ORDER_OTHER', 'pricelists_ids')).split(","))
+        pricelists_ids = list(map(int, (config.get('SALE_ORDER_OTHER', 'pricelists_ids')).split(",")))
     else:
         pricelists_ids = sock.execute_kw(db, uid, password, 'product.pricelist', 'search', [[]])
 
@@ -55,7 +55,7 @@ def get_prieclist_id():
 def get_sale_shop_id():
 
     if config.get('SALE_ORDER_OTHER', 'sale_shops_ids'):
-        sale_shops_ids = map(int, (config.get('SALE_ORDER_OTHER', ' sale_shops_ids')).split(","))
+        sale_shops_ids = list(map(int, (config.get('SALE_ORDER_OTHER', ' sale_shops_ids')).split(",")))
     else:
         sale_shops_ids = sock.execute_kw(db, uid, password, 'sale.shop', 'search', [[]])
 
@@ -75,7 +75,7 @@ def get_ship_product_id():
 def get_product_id():
 
     if config.get('SALE_ORDER_OTHER', 'products_ids'):
-        products_ids = map(int, (config.get('SALE_ORDER_OTHER', 'products_ids')).split(","))
+        products_ids = list(map(int, (config.get('SALE_ORDER_OTHER', 'products_ids').split(","))))
     else:
         products_ids = sock.execute_kw(db, uid, password, 'product.product', 'search', [[['type', '=', 'product']]])
 
@@ -96,7 +96,7 @@ def get_delivery_and_payment_type():
 def get_payment_term_id(payment_type):
 
     if config.get('SALE_ORDER_OTHER', 'payment_terms_ids'):
-        payment_terms_list = map(int, (config.get('SALE_ORDER_OTHER', 'payment_terms_ids')).split(","))
+        payment_terms_list = list(map(int, (config.get('SALE_ORDER_OTHER', 'payment_terms_ids')).split(",")))
         payment_terms_dict = sock.execute_kw(db, uid, password, 'account.payment.term', 'search_read',
                                          [[['id', 'in', payment_terms_list]]], {'fields': ['payment_type']})
     else:
@@ -114,7 +114,7 @@ def get_payment_term_id(payment_type):
 def get_delivery_carrier_id(delivery_type):
 
     if config.get('SALE_ORDER_OTHER', 'delivery_carriers_ids'):
-        delivery_carriers_list = map(int, (config.get('SALE_ORDER_OTHER', 'delivery_carriers_ids')).split(","))
+        delivery_carriers_list = list(map(int, (config.get('SALE_ORDER_OTHER', 'delivery_carriers_ids')).split(",")))
         delivery_carriers_dict = sock.execute_kw(db, uid, password, 'delivery.carrier', 'search_read',
                                          [[['id', 'in', delivery_carriers_list]]], {'fields': ['delivery_payment_type']})
     else:
